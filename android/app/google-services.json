@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "880365950879",
+    "project_id": "jejak-sampah",
+    "storage_bucket": "jejak-sampah.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880365950879:android:27e7ec44dccabfacbb4faa",
+        "android_client_info": {
+          "package_name": "com.example.jejak_sampah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArWoH8K1dggztSbQOj44anfZrM7252QSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

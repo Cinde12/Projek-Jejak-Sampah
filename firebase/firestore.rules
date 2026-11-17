@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn();
+      // Saat daftar: poin harus 0 dan role harus 'warga'
+      allow create: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.poin == 0
+                    && request.resource.data.role == 'warga';
+      // Pengguna hanya boleh mengubah datanya sendiri; role tidak boleh diubah
+      allow update: if signedIn() && request.auth.uid == uid
+                    && request.resource.data.role == resource.data.role;
+    }
+
+    match /reports/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.status == 'menunggu';
+      allow update: if isAdmin();
+      allow delete: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+  }
+}
